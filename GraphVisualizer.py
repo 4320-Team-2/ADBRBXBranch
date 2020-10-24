@@ -28,6 +28,7 @@ dates = []
 #Creating a tuple of the dates so we can use them as key.
 key = tuple(dates)
 
+#Populating lists with data from API
 opens = []
 for x in range(len(key)):
     opens.append(response["Time Series (Daily)"][key[x]]["1. open"])
@@ -44,12 +45,18 @@ closes = []
 for x in range(len(key)):
     closes.append(response["Time Series (Daily)"][key[x]]["4. close"])
     
-#Dumb Stuff Down Here, converting list of strings to list of floats
-test = [float(i) for i in opens]
+#Dumb Stuff Down Here, converting list of strings to list of floats so we can plot them
+floatOpen = [float(i) for i in opens]
+floatHigh = [float(i) for i in highs]
+floatLow = [float(i) for i in lows]
+floatCloses = [float(i) for i in closes]
 
-
-bar_chart = pygal.Line()
-bar_chart.x_labels = dates
-bar_chart.add("open",test)
-bar_chart.render_to_file("testing.svg")
+#Graphing data from lists, creates a .svg file you can view in whatever folder this file is in.
+line_chart = pygal.Line()
+line_chart.x_labels = dates
+line_chart.add("Open",floatOpen)
+line_chart.add("High",floatHigh)
+line_chart.add("Low", floatLow)
+line_chart.add("Close",floatCloses)
+line_chart.render_to_file("testing.svg")
 print("Success!")
