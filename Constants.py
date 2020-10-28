@@ -1,3 +1,4 @@
+#Where we keep all our Constants at. 
 API_URL = "https://www.alphavantage.co/query"
 SYMBOL = "GOOGL"
 CHART_TYPE = True

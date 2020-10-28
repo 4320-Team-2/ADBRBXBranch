@@ -5,8 +5,7 @@ import Constants
 import date
 import lxml
 
-#Selecting the time series function, company symbol, and how big the output size
-#will be, and our API key.
+#API Query paramters
 data = {
     "function":Constants.TIME_SERIES,
     "symbol":Constants.SYMBOL,
@@ -14,7 +13,7 @@ data = {
     "apikey":Constants.API_KEY
     }
 
-#Sending our request to the API using the information we put in data
+#Sending our request to the API using the information we put in the data collection.
 apiCall = rq.get(Constants.API_URL, params=data)
 
 #Stores the json-enconded content in the retrieved data.
@@ -24,10 +23,13 @@ response = apiCall.json()
 dates = []
 [dates.append(date) for date in response["Time Series (Daily)"]]
 
+#Making a set out of date so we can find its intersections.
 set_2 = frozenset(date.date_strings)
 
+#Reordering list to original sequence, finds intersection with oringal dates and the dates inbetween user input.
 final_dates = [x for x in dates if x in set_2]
 
+#Reverses the list because the list is put in reverse order.
 final_dates.reverse()
 
 #Creating a tuple of the dates so we can use them as key.
